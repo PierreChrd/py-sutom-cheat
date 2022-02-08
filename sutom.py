@@ -63,15 +63,29 @@ def dict_to_words(dict):
 
     return word_array
 
+def dict_to_words_with_array(dict, dictionary_array):
+    count = 0
+    word_array = []
+    for word in dictionary_array:
+
+        word_len = len(dict)
+        slen = len(list(str(word)))
+        if word_len == slen:
+            conditions = dict_to_conditions(dict)
+            if verify_condition(word ,conditions):
+                word_array.append(word)
+
+    return word_array
+
 def orange_verification(letter_list, letter, effectif):
     count = 0
     for specific_letter in letter_list:
         if specific_letter == letter:
             count += 1
     if count == effectif:
-        return False
-    else:
         return True
+    else:
+        return False
 
 def verify_condition(word ,condition_dict):
 
@@ -83,6 +97,7 @@ def verify_condition(word ,condition_dict):
             return False
 
     for c_orange in orange_condition:
+
         if orange_verification(letter_list, c_orange ,orange_condition[c_orange][0]) == False:
             return False
 
@@ -93,3 +108,7 @@ dict = input_word()
 result = dict_to_words(dict)
 print(result)
 print(len(result))
+while(True):
+    dict = input_word()
+    result = dict_to_words_with_array(dict ,result)
+    print(result)
