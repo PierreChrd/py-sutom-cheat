@@ -24,6 +24,7 @@ def input_word():
     return dict
 
 def dict_to_conditions(dict):
+
     red_dict = {}
     orange_dict = {}
     for element in dict:
@@ -77,7 +78,21 @@ def dict_to_words_with_array(dict, dictionary_array):
 
     return word_array
 
-def orange_verification(letter_list, letter, effectif):
+def orange_verification(letter_list, letter, effectif, conditions):
+    print(conditions)
+    print(letter_list)
+
+    for c in conditions:
+        letter_list[c] = '@'
+
+    new_arr = []
+    for t in letter_list:
+        if t != '@':
+            new_arr.append(t)
+    print(letter_list)
+    print(new_arr)
+    letter_list = new_arr
+
     count = 0
     for specific_letter in letter_list:
         if specific_letter == letter:
@@ -85,6 +100,8 @@ def orange_verification(letter_list, letter, effectif):
     if count == effectif:
         return True
     else:
+        print(letter_list)
+        print("erreur orange")
         return False
 
 def verify_condition(word ,condition_dict):
@@ -94,21 +111,43 @@ def verify_condition(word ,condition_dict):
     red_condition = condition_dict[1]
     for position in red_condition:
         if letter_list[position] != red_condition[position]:
+            print(word)
+            print('Erreur rouge')
             return False
 
     for c_orange in orange_condition:
 
-        if orange_verification(letter_list, c_orange ,orange_condition[c_orange][0]) == False:
+        if orange_verification(letter_list, c_orange ,orange_condition[c_orange][0], red_condition) == False:
+            print(word)
             return False
 
     return True
 
+def get_first_word(size, first_letter):
+    count = 0
+    with open("dictionnaire.txt") as fp:
+        while True:
+            count += 1
+            line = fp.readline()
+            word = line.strip().lower()
+            word_list = list(str(word))
+            slen = len(word_list)
+            if slen == size and word_list[0] == first_letter.lower():
+                return word
+            if not line:
+                break
+def get_random_word(list):
+    size = len(list)
 
-dict = input_word()
-result = dict_to_words(dict)
-print(result)
-print(len(result))
-while(True):
+
+if __name__ == "__main__":
     dict = input_word()
-    result = dict_to_words_with_array(dict ,result)
+    print(dict)
+    result = dict_to_words(dict)
+
     print(result)
+    print(len(result))
+    while(True):
+        dict = input_word()
+        result = dict_to_words_with_array(dict ,result)
+        print(result)
