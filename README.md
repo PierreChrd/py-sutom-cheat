@@ -20,6 +20,8 @@ git clone https://github.com/PierreChrd/py-sutom-cheat.git
 pip install -r requirements.txt
 ```
 
-## Autre Script
+## Autre script
+
+[Cet autre script](https://github.com/Gyrfalc0n/SUTOM-Resolver/) fait par [Gyrfalc0n](https://github.com/Gyrfalc0n/) résoud également le jeu de la même manière 🙏.
 
 ##### Développé par Pierre Chaussard.
