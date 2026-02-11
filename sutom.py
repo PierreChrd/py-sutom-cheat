@@ -8,35 +8,20 @@ from typing import Iterable, List, Dict, Set, Tuple
 
 
 def _clean_word(w: str) -> str:
-    # Normalisation simple : minuscule, retrait espaces
-    # Si tu veux gérer les accents, ajoute une translittération (ex: unidecode)
     return w.strip().lower()
 
 
 @dataclass
 class Constraints:
-    """
-    Contraintes cumulées au fil des tentatives.
-    - greens : positions figées -> lettre (verts)
-    - required_min : min d'occurrences pour chaque lettre vue (verts + jaunes)
-    - forbidden_positions : lettres qui ne peuvent PAS être à certaines positions (jaunes)
-    - absent : lettres exclues (gris ET jamais vues comme vert/jaune)
-    """
-
     greens: Dict[int, str] = field(default_factory=dict)
     required_min: Counter = field(default_factory=Counter)
     forbidden_positions: Dict[str, Set[int]] = field(default_factory=lambda: defaultdict(set))
     absent: Set[str] = field(default_factory=set)
 
     def update_from_feedback(self, row: List[Tuple[str, str, int]]):
-        """
-        row = [(letter, status('green'|'yellow'|'gray'|'unknown'), pos), ...]
-        Met à jour les contraintes en intégrant le feedback de la ligne.
-        """
         local_required = Counter()
         local_greens = {}
 
-        # 1) Comptage verts+jaunes pour minima
         for letter, status, pos in row:
             if not letter:
                 continue
@@ -47,16 +32,13 @@ class Constraints:
                 local_required[letter] += 1
                 self.forbidden_positions[letter].add(pos)
 
-        # 2) Fixer les verts
         for pos, letter in local_greens.items():
             self.greens[pos] = letter
 
-        # 3) Minima requis cumulés
         for letter, cnt in local_required.items():
             if cnt > self.required_min[letter]:
                 self.required_min[letter] = cnt
 
-        # 4) Lettres grises absentes (si non requises)
         for letter, status, _ in row:
             if not letter:
                 continue
@@ -84,12 +66,10 @@ class SutomSolver:
                 w = _clean_word(line)
                 if not w:
                     continue
-                # Filtrer caractères non alpha simples si besoin
                 if not w.isalpha():
                     continue
                 self.words_by_len[len(w)].append(w)
 
-        # Déduplique et trie
         for L in list(self.words_by_len):
             self.words_by_len[L] = sorted(set(self.words_by_len[L]))
 
@@ -122,7 +102,6 @@ class SutomSolver:
 
     @staticmethod
     def _respect_absent(word: str, absent: Set[str], required_min: Counter, greens: Dict[int, str]) -> bool:
-        # Une lettre "absente" ne doit pas apparaître, sauf si elle est aussi requise
         req_letters = set(required_min.keys()) | set(greens.values())
         for ch in word:
             if ch in absent and ch not in req_letters:
@@ -145,7 +124,6 @@ class SutomSolver:
 
     @staticmethod
     def _letter_frequencies(words: List[str]) -> Counter:
-        # Fréquence globale (on compte une fois par mot pour favoriser la diversité)
         freq = Counter()
         for w in words:
             for ch in set(w):
@@ -153,10 +131,6 @@ class SutomSolver:
         return freq
 
     def best_guess(self, candidates: List[str], constraints: Constraints) -> str:
-        """
-        Heuristique : score = somme des fréquences des lettres distinctes du mot,
-        avec bonus léger quand la lettre est à une position encore inconnue (non verte).
-        """
         if not candidates:
             raise ValueError("No candidates to choose from")
 

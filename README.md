@@ -3,7 +3,9 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![Selenium](https://img.shields.io/badge/Selenium-4.x-43B02A.svg?logo=selenium&logoColor=white)](https://www.selenium.dev/)
 [![OS](https://img.shields.io/badge/OS-Windows%20%7C%20Linux-blue.svg)](#)
-[![License: GPL](https://img.shields.io/badge/License-GPL-blue.svg)](LICENSE)
+[![License: GPL](https://img.shields.io/badge/License-GPLv3-yellow.svg)](LICENSE)
+![MadeInFrance](https://img.shields.io/badge/Made_in-🟦⬜🟥-ffffff)
+
 
 Un bot Python utilisant **Selenium** et une stratégie intelligente pour **résoudre automatiquement SUTOM** (https://sutom.nocle.fr).  
 Il saisit les mots, lit les feedbacks (🟩🟨⬜), met à jour les contraintes et sélectionne les meilleurs candidats jusqu’à la solution.
@@ -121,7 +123,7 @@ python scrap.py --browser firefox --headless --gecko-path geckodriver.exe
 ## 📄 Licence
 
 
-Ce projet est distribué sous licence **GNU GPL**.  
+Ce projet est distribué sous licence **GNU General Public License v3.0**.  
 Voir le fichier `LICENSE` pour les détails.
 
 ---
