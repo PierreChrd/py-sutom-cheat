@@ -10,7 +10,7 @@ Il saisit les mots, lit les feedbacks (🟩🟨⬜), met à jour les contraintes
 
 ---
 
-![Aperçu de l’outil](démo.png)
+![Aperçu de l’outil](démo.gif)
 
 ---
 
