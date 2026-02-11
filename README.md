@@ -4,7 +4,6 @@
 [![Selenium](https://img.shields.io/badge/Selenium-4.x-43B02A.svg?logo=selenium&logoColor=white)](https://www.selenium.dev/)
 [![OS](https://img.shields.io/badge/OS-Windows%20%7C%20Linux-blue.svg)](#)
 [![License: GPL](https://img.shields.io/badge/License-GPL-blue.svg)](LICENSE)
-[![CI](https://github.com/PierreChrd/py-sutom-cheat/actions/workflows/ci.yaml/badge.svg)](https://github.com/PierreChrd/py-sutom-cheat/actions/workflows/ci.yaml)
 
 Un bot Python utilisant **Selenium** et une stratégie intelligente pour **résoudre automatiquement SUTOM** (https://sutom.nocle.fr).  
 Il saisit les mots, lit les feedbacks (🟩🟨⬜), met à jour les contraintes et sélectionne les meilleurs candidats jusqu’à la solution.
