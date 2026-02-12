@@ -32,7 +32,7 @@ Il saisit les mots, lit les feedbacks (🟩🟨⬜), met à jour les contraintes
 
 1. Cloner le repo et placer à la racine avec la commande : 
 ```git
-git clone https://github.com/PierreChrd/py-sutom-cheat
+git clone https://github.com/PierreChrd/py-sutom-resolver
 ```
 2. Installer la dépendance Python :
 ```
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 3. Installer le WebDriver :
 - **Firefox** : geckodriver (https://github.com/mozilla/geckodriver/releases)
 - **Chrome** : chromedriver (https://googlechromelabs.github.io/chrome-for-testing/)
-
+> Placer le driver choisi dans le dossier où se trouve le script (voir section Structure).
 ---
 
 ## ▶️ Utilisation
@@ -86,6 +86,7 @@ python scrap.py --browser firefox --headless --gecko-path geckodriver.exe
 ├── scrap.py          # Automatisation Selenium
 ├── sutom.py          # Moteur de filtrage + heuristique
 ├── dictionnaire.txt  # Liste de mots (1 par ligne)
+├── geckodriver.exe   # Driver utilisé (gecko/chrome)
 └── README.md
 ```
 
