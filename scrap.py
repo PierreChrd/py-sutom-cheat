@@ -1,9 +1,3 @@
-# scrap.py
-# Prérequis : pip install -U selenium
-# Usage (exemples) :
-#   python scrap.py --browser firefox --gecko-path geckodriver.exe --firefox-binary "C:\Program Files\Mozilla Firefox\firefox.exe" --dict dictionnaire.txt
-#   python scrap.py --browser chrome --chromedriver-path "C:\Tools\chromedriver.exe" --headless --dict dictionnaire.txt
-
 from __future__ import annotations
 
 import argparse
@@ -146,6 +140,12 @@ def type_word(driver, word: str, typing_delay: float = 0.08):
             time.sleep(typing_delay)
     body.send_keys(Keys.ENTER)
 
+def clear_word(driver, word_len: int, typing_delay: float = 0.03):
+    body = driver.find_element(By.TAG_NAME, "body")
+    for _ in range(word_len):
+        body.send_keys(Keys.BACKSPACE)
+        time.sleep(typing_delay)
+
 def wait_row_result(driver, wait: WebDriverWait, row_index: int, word_len: int, timeout_s: float = 6.0) -> bool:
     start = time.time()
     xpath_row = f'//*[@id="grille"]/table/tr[{row_index}]'
@@ -271,6 +271,8 @@ def main():
             ok = wait_row_result(driver, wait, attempt, word_len, timeout_s=6.0)
             if not ok:
                 print("[AVERTISSEMENT] Mot non accepté (probable mot hors dico SUTOM). On essaie un autre.")
+                clear_word(driver, word_len, typing_delay=0.03)
+
                 if guess in candidates:
                     try:
                         candidates.remove(guess)
@@ -281,6 +283,7 @@ def main():
                     break
                 guess = solver.best_guess(candidates, constraints)
                 print(f"[INFO] Ré-essai {attempt} → {guess}")
+                
                 type_word(driver, guess, typing_delay=args.typing_delay)
                 continue
 
