@@ -21,6 +21,7 @@ class Constraints:
     def update_from_feedback(self, row: List[Tuple[str, str, int]]):
         local_required = Counter()
         local_greens = {}
+        seen_required_letters = set()
 
         for letter, status, pos in row:
             if not letter:
@@ -28,9 +29,11 @@ class Constraints:
             if status == "green":
                 local_required[letter] += 1
                 local_greens[pos] = letter
+                seen_required_letters.add(letter)
             elif status == "yellow":
                 local_required[letter] += 1
                 self.forbidden_positions[letter].add(pos)
+                seen_required_letters.add(letter)
 
         for pos, letter in local_greens.items():
             self.greens[pos] = letter
@@ -43,7 +46,7 @@ class Constraints:
             if not letter:
                 continue
             if status == "gray":
-                if letter not in self.required_min and letter not in self.greens.values():
+                if letter not in seen_required_letters:
                     self.absent.add(letter)
 
     def __repr__(self) -> str:
